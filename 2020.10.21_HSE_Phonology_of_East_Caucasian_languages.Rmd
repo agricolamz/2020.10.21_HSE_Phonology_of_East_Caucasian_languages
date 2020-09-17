@@ -6,7 +6,7 @@ date: |
     | 21 October 2020
     | Part of the Course on [Nakh-Daghestanian languages](some.html)
     |
-    | Presentation is available here: \alert{tinyurl.com/y7kjsp67}   
+    | Presentation is available here: \alert{tinyurl.com/y2foeo9g}   
     | ![](images/00_qrcode.png)'
 output: 
   beamer_presentation:
@@ -25,6 +25,10 @@ editor_options:
 ```{r setup, include=FALSE}
 options(digits = 3)
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+# library(qrcode)
+# png(filename="images/00_qrcode.png", width = 200, height = 200)
+# qrcode_gen("https://github.com/agricolamz/2020.10.21_HSE_Phonology_of_East_Caucasian_languages/raw/master/2020.10.21_HSE_Phonology_of_East_Caucasian_languages.pdf")
+# dev.off()
 ```
 
 # Introduction
