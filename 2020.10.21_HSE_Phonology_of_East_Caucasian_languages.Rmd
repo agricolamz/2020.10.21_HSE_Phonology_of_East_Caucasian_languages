@@ -45,8 +45,8 @@ data <- read_csv("data/data.csv")
     * [@grawunder17]
     * The Oxford Handbook of Languages of the
 Caucasus: [@begus21], [@boris21b], [@boris21a]
-    * The Mouton Handbook of Languages of the
-Caucasus
+    * Handbook of Caucasian
+Languages: [@koryakov21]
     * and phonological part in more general descriptions of East Caucasian languages
 * historical-comparative phonetics
     * S. M. Gasanova, G. Kh. Ibragimov, P. T. Magomedova, U. A. Meylanova, B. B. Talibov, S. M. Khaydakov, A. E. Alekseev, Ju. D. Desheriev, B. K. Gigineishvili, D. S. Imnaishvili, J. Nichols, S. L. Nikolayev, S. A. Starostin, A. S. Kasyan, N. A. Ardoteli, O. A. Mudrak
@@ -218,9 +218,11 @@ knitr::include_graphics("images/03_systems.png")
 
 ## Thanks
 
-* reasercher teams that collected all data
-* if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology) \pause
+* to reasercher teams who collected all data
+* to Linguistic Convergence Laboratory for organising this course\pause
+* and \alert{YOU} for your attention\bigskip\pause
+* if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology)
 * source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
-* and \alert{YOU} for your attention
+
 
 # References {.allowframebreaks}
