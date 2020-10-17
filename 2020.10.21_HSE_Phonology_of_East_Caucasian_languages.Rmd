@@ -31,8 +31,25 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 # dev.off()
 library(tidyverse)
 library(lingtypology)
-data <- read_tsv("data/data.csv")
+data <- read_csv("data/data.csv")
 ```
+
+# Introduction
+
+## About phonology of East Caucasian languages
+
+* phonology
+    * [@kk90]
+    * The indigenous languages of the Caucasus: [@smeets94a], [@smeets94b]
+    * Yaziki mira: [@alekseev01] and predecessor projects
+    * [@grawunder17]
+    * The Oxford Handbook of Languages of the
+Caucasus: [@begus21], [@boris21b], [@boris21a]
+    * The Mouton Handbook of Languages of the
+Caucasus
+    * and phonological part in more general descriptions of East Caucasian languages
+* historical-comparative phonetics
+    * S. M. Gasanova, G. Kh. Ibragimov, P. T. Magomedova, U. A. Meylanova, B. B. Talibov, S. M. Khaydakov, A. E. Alekseev, Ju. D. Desheriev, B. K. Gigineishvili, D. S. Imnaishvili, J. Nichols, S. L. Nikolayev, S. A. Starostin, A. S. Kasyan, N. A. Ardoteli, O. A. Mudrak
 
 # Data
 
@@ -65,7 +82,7 @@ data <- read_tsv("data/data.csv")
   \item Bagvalal
   \item Akhvakh
 \end{itemize}
-\item Dargic
+\item Dargwa
 \item Lak
 \item Lezgic
 \begin{itemize}
@@ -113,7 +130,7 @@ data <- read_tsv("data/data.csv")
   \item \alert{Bagvalal}
   \item Akhvakh
 \end{itemize}
-\item Dargic
+\item Dargwa
 \item Lak
 \item Lezgic
 \begin{itemize}
@@ -133,14 +150,13 @@ data <- read_tsv("data/data.csv")
 
 ## Languages not present in [@kk90]
 
-* Dargic, Mehweb (my own fieldwork)
-* Dargic, Kaitag
+* Nakh, Chechen
+* Nakh, Ingush
+* Nakh, Tsova-Tush [@holisky94]
+* Dargwa, Mehweb [@moroz19]
 * Andic, Botlikh
 * Andic, Godoberi
 * Andic, Bagvalal
-* Nakh, Chechen
-* Nakh, Ingush
-* Nakh, Tsova-Tush
 
 ## Data (language view)
 
@@ -157,11 +173,54 @@ map.feature(lang = data_m$lang[-5],
             tile = "Stamen.Terrain")
 ```
 
+# Methods
+
+## Phonology of East Caucasian languages can be preseneted like this...
+
+```{r}
+knitr::include_graphics("images/01_systems.png")
+```
+
+## Phonology of East Caucasian languages can be preseneted like this...
+
+```{r}
+knitr::include_graphics("images/02_systems.png")
+```
+
+## Phonology of East Caucasian languages can be preseneted like this...
+
+```{r}
+knitr::include_graphics("images/03_systems.png")
+```
+
+## This way is...
+
+* boring, \pause
+* mechanical, \pause 
+* it is hard to make generalisations (at least, on the fly)
+
+## Phonology of East Caucasian languages can be preseneted like this...
+
+![](images/04_johanna.png)
+\pause
+
+(If you have not seen it, go and wath [our previous lecture](https://youtu.be/gfvauHnP1c4)!)
+
+## Those ways are...
+
+* To list all inventories
+    * boring, 
+    * mechanical, 
+    * hard to make generalisations (at least, on the fly)
+* To present generalisations
+    * restricted to peculiarities, \pause
+    * you need to be a specialist
+
 ## Thanks
 
 * reasercher teams that collected all data
 * if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology) \pause
-* source code and data for this presentation are availible online: 
+* source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
 * and \alert{YOU} for your attention
 
 # References {.allowframebreaks}
