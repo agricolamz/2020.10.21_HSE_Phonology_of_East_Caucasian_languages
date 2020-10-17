@@ -58,3 +58,5 @@ consonant_rules <- apriori(as_trans_consonants,
                                          target = "frequent itemsets"))
 inspect(consonant_rules) %>% 
   View()
+summary(consonant_rules)
+arules::union()

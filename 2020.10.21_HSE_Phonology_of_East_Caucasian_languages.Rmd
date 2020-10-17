@@ -1,12 +1,12 @@
 ---
 title: "Phonology of East Caucasian languages"
 author: "George Moroz"
-institute: "Linguistic Convergence Laboratory, NRU HSE"
+institute: "[Linguistic Convergence Laboratory](https://ilcl.hse.ru/en/), NRU HSE"
 date: |
     | 21 October 2020
-    | Part of the Course on [Nakh-Daghestanian languages](some.html)
+    | part of the online [course on East Caucasian languages](https://ilcl.hse.ru/en/east_caucasian/)
     |
-    | Presentation is available here: \alert{tinyurl.com/y2foeo9g}   
+    | last version of the presentation is available here: [tinyurl.com/y2foeo9g](tinyurl.com/y2foeo9g)
     | ![](images/00_qrcode.png)'
 output: 
   beamer_presentation:
@@ -29,12 +29,139 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 # png(filename="images/00_qrcode.png", width = 200, height = 200)
 # qrcode_gen("https://github.com/agricolamz/2020.10.21_HSE_Phonology_of_East_Caucasian_languages/raw/master/2020.10.21_HSE_Phonology_of_East_Caucasian_languages.pdf")
 # dev.off()
+library(tidyverse)
+library(lingtypology)
+data <- read_tsv("data/data.csv")
 ```
 
-# Introduction
+# Data
 
-## Introduction
+## Languages
+\begin{multicols}{3}
+\begin{itemize}
 
-* bla
+\item Nakh
+\begin{itemize}
+  \item Chechen
+  \item Ingush
+  \item Tsova-Tush (Bats, Batsbi)
+\end{itemize}
+\item Tsezic (Didoic)
+\begin{itemize}
+\item Tsez
+\item Hinuq
+\item Bezhta
+\item Hunzib
+\item Khwarshi-Inkhoqwari
+\end{itemize}
+\item Avar–Andic
+\begin{itemize}
+  \item Avar
+  \item Andi
+  \item Botlikh
+  \item Godoberi
+  \item Chamalal
+  \item Tindi
+  \item Bagvalal
+  \item Akhvakh
+\end{itemize}
+\item Dargic
+\item Lak
+\item Lezgic
+\begin{itemize}
+\item Archi
+\item Tabasaran
+\item Aghul
+\item Lezgian
+\item Udi
+\item Budukh
+\item Kryz
+\item Rutul
+\item Tsakhur
+\end{itemize}
+\item Khinalug
+\end{itemize}
+\end{multicols}
+
+
+## Languages not present in [@kk90]
+
+\begin{multicols}{3}
+\begin{itemize}
+\item \alert{Nakh}
+\begin{itemize}
+  \item \alert{Chechen}
+  \item \alert{Ingush}
+  \item \alert{Tsova-Tush (Bats, Batsbi)}
+\end{itemize}
+\item Tsezic (Didoic)
+\begin{itemize}
+\item Tsez
+\item Hinuq
+\item Bezhta
+\item Hunzib
+\item Khwarshi-Inkhoqwari
+\end{itemize}
+\item Avar–Andic
+\begin{itemize}
+  \item Avar
+  \item Andi
+  \item \alert{Botlikh}
+  \item \alert{Godoberi}
+  \item Chamalal
+  \item Tindi
+  \item \alert{Bagvalal}
+  \item Akhvakh
+\end{itemize}
+\item Dargic
+\item Lak
+\item Lezgic
+\begin{itemize}
+\item Archi
+\item Tabasaran
+\item Aghul
+\item Lezgian
+\item Udi
+\item Budukh
+\item Kryz
+\item Rutul
+\item Tsakhur
+\end{itemize}
+\item Khinalug
+\end{itemize}
+\end{multicols}
+
+## Languages not present in [@kk90]
+
+* Dargic, Mehweb (my own fieldwork)
+* Dargic, Kaitag
+* Andic, Botlikh
+* Andic, Godoberi
+* Andic, Bagvalal
+* Nakh, Chechen
+* Nakh, Ingush
+* Nakh, Tsova-Tush
+
+## Data (language view)
+
+```{r}
+data %>% 
+  distinct(glottocode, branch) %>%
+  mutate(lang = lang.gltc(glottocode)) %>% 
+  na.omit() ->
+  data_m
+
+map.feature(lang = data_m$lang[-5],
+            features = data_m$branch[-5], 
+            width = 8,
+            tile = "Stamen.Terrain")
+```
+
+## Thanks
+
+* reasercher teams that collected all data
+* if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology) \pause
+* source code and data for this presentation are availible online: 
+* and \alert{YOU} for your attention
 
 # References {.allowframebreaks}
