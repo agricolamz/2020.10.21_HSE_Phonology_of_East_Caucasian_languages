@@ -221,8 +221,7 @@ knitr::include_graphics("images/03_systems.png")
 * to reasercher teams who collected all data
 * to Linguistic Convergence Laboratory for organising this course\pause
 * and \alert{YOU} for your attention\bigskip\pause
-* if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology)
-* source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
-
+* if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology) [@moroz2017]
+* this presentation made with `rmarkdown` [@yihui18]; source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
 
 # References {.allowframebreaks}
