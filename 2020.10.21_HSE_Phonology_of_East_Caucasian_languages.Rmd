@@ -158,19 +158,87 @@ Languages: [@koryakov21]
 * Andic, Godoberi
 * Andic, Bagvalal
 
+## Data
+
+`r nrow(data)` $\times$ `r ncol(data)` [table](https://raw.githubusercontent.com/agricolamz/2020.10.21_HSE_Phonology_of_East_Caucasian_languages/master/data/data.csv) with the following columns:
+
+```{r, results="asis"}
+cat(paste0("* ", colnames(data), "\n"))
+```
+
+
 ## Data (language view)
 
 ```{r}
 data %>% 
   distinct(glottocode, branch) %>%
-  mutate(lang = lang.gltc(glottocode)) %>% 
-  na.omit() ->
+  mutate(lang = lang.gltc(glottocode),
+         lat = lat.lang(lang),
+         long = long.lang(lang)) ->
   data_m
 
-map.feature(lang = data_m$lang[-5],
-            features = data_m$branch[-5], 
+data_m[data_m$lang == "Megeb", 4] <- 42.2528
+data_m[data_m$lang == "Megeb", 5] <- 47.0472
+
+map.feature(lang = data_m$lang,
+            features = data_m$branch, 
+            latitude = data_m$lat,
+            longitude = data_m$long,
             width = 8,
             tile = "Stamen.Terrain")
+```
+
+
+## Data (village view)
+
+```{r, cache = TRUE}
+all_villages <- read_tsv("https://raw.githubusercontent.com/sverhees/master_villages/master/data/villages.csv")
+
+all_villages %>% 
+  filter(!kutans,
+         !is.na(lat),
+         !str_detect(lang, "Tat|Kumyk|Nogai|Azerbaijani|Georgian")) ->
+  all_villages
+
+all_villages %>% 
+  filter(str_detect(lang, "Agul|Akhvakh|Andi|Archi|Avar|Bagvalal|Bats|Bezhta|Botlikh|Budukh|Chamalal|Chechen|Dargwa|Godoberi|Hinuq")) ->
+  first_map
+
+all_villages %>% 
+  filter(str_detect(lang, "Hunzib|Ingush|Khwarshi|Karata|Khinalug|Kryz|Lak|Lezgian|Rutul|Tabasaran|Tindi|Tsakhur|Tsez|Udi")) ->
+  second_map
+
+set.seed(45)
+my_colors <-
+    c(
+      "#1f77b4",
+      "#ff7f0e",
+      "#2ca02c",
+      "#d62728",
+      "#9467bd",
+      "#8c564b",
+      "#e377c2",
+      "#7f7f7f",
+      "#17becf",
+      sample(grDevices::colors()[!grepl("ivory|azure|white|gray|grey|black|pink|1",
+                                        grDevices::colors())])
+    )
+
+map.feature(lang = first_map$lang,
+            features = first_map$lang, 
+            latitude = first_map$lat,
+            longitude = first_map$lon,
+            color = my_colors[1:15],
+            width = 3,
+            tile = "Stamen.Terrain") %>% 
+  map.feature(lang = second_map$lang,
+            features = second_map$lang, 
+            latitude = second_map$lat,
+            longitude = second_map$lon,
+            color = my_colors[16:29],
+            width = 3,
+            tile = "Stamen.Terrain", 
+            pipe.data = ., legend.position = "topleft")
 ```
 
 # Methods
@@ -201,7 +269,10 @@ knitr::include_graphics("images/03_systems.png")
 
 ## Phonology of East Caucasian languages can be preseneted like this...
 
-![](images/04_johanna.png)
+```{r}
+knitr::include_graphics("images/04_johanna.png")
+```
+
 \pause
 
 (If you have not seen it, go and wath [our previous lecture](https://youtu.be/gfvauHnP1c4)!)
@@ -214,11 +285,178 @@ knitr::include_graphics("images/03_systems.png")
     * hard to make generalisations (at least, on the fly)
 * To present generalisations
     * restricted to peculiarities, \pause
-    * you need to be a specialist
+    * you need to be a specialist \pause
+* May be those conclusion could be data driven? \pause
+    * some of them can be visualised with a map
+    * some of them can be gahtered via Market basket analysis
+    * some of them can be gahtered via syllable structure analysis
+
+# Inventory size
+
+## Consonants
+
+```{r}
+data %>% 
+  left_join(data_m) %>% 
+  count(language, lang, lat, long, sound_type, branch) %>% 
+  pivot_wider(names_from = sound_type, values_from = n, values_fill = 0) %>% 
+  mutate(`vo+di` = vowel+diphthong) ->
+  raw_counts
+
+map.feature(languages = raw_counts$lang,
+            features = raw_counts$consonant,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            width = 8,
+            tile = "Stamen.Terrain")
+```
+
+## Consonants
+
+```{r}
+map.feature(languages = raw_counts$lang,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            minichart = "pie",
+            minichart.data = raw_counts$consonant,
+            minichart.labels = TRUE,
+            width = 3,
+            tile = "Stamen.Terrain")
+```
+
+## Consonants
+
+* Akhwakh (Andic) -- 91
+* Tindi (Andic) -- 84
+* Chamalal (Andic) -- 73
+* Archi (Lezgic) -- 78
+* ...
+* Ingush (Nakh) -- 34
+* Bezhta (Tsezic) -- 34
+* Inkhoqwari (Tsezic) -- 33
+
+## Consonants: Akwakh
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+b  & d   &      &       & dʒ   &       &      &       & ɡ   &      &     &      &   &    \\ \hline
+   & dʷ  &      &       & dʒʷ  &       &      &       & ɡʷ  &      &     &      &   &    \\ \hline
+pʰ & tʰ  & ts   & tsː   & tʃ   & tʃː   & tɬ   & tɬː   & k   & kː   & q   & qː   &   & ʔ  \\ \hline
+   & tʰʷ & tsʷ  & tsːʷ  & tʃʷ  & tʃːʷ  & tɬʷ  & tɬːʷ  & kʷ  & kːʷ  & qʷ  & qːʷ  &   & ʔʷ \\ \hline
+p’ & t’  & ts’  & tsː’  & tʃ’  & tʃ’ː  & tɬ’  & tɬ’ː  & k’  & k’ː  & q’  & q’ː  &   &    \\ \hline
+   & t’ʷ & ts’ʷ & tsː’ʷ & tʃ’ʷ & tʃ’ːʷ & tɬ’ʷ & tɬ’ːʷ & k’ʷ & k’ːʷ & q’ʷ & q’ːʷ &   &    \\ \hline
+   &     & z    &       & ʒ    &       &      &       &     &      & ʁ   &      & ʢ &    \\ \hline
+   &     & zʷ   &       & ʒʷ   &       &      &       &     &      & ʁʷ  &      &   &    \\ \hline
+   &     & s    & sː    & ʃ    & ʃː    & ɬ    & ɬː    & x   & xː   & χ   & χː   & ʜ & h  \\ \hline
+   &     & sʷ   & sːʷ   & ʃʷ   & ʃːʷ   & ɬʷ   & ɬːʷ   & xʷ  & xːʷ  & χʷ  & χːʷ  &   & hʷ \\ \hline
+m  & n   &      &       &      &       &      &       &     &      &     &      &   &    \\ \hline
+w  & r   &      &       &      &       & l    &       & j   &      &     &      &   &    \\ \hline
+\end{tabular}
+
+* gemenation
+* labialisation
+
+## Consonants: geminate ejectives
+
+
+
+## Consonants: Inkhoqwari
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+b  & d  &     & dʒ  &     & ɡ  &    &   &   \\ \hline
+pʰ & tʰ & ts  & tʃ  & tɬ  & k  & q  &   & ʔ \\ \hline
+p’ & t’ & ts’ & tʃ’ & tɬ’ & k’ & q’ &   &   \\ \hline
+   &    & z   & ʒ   &     &    & ʁ  & ʢ &   \\ \hline
+   &    & s   & ʃ   & ɬ   &    & χ  & ʜ & h \\ \hline
+m  & n  &     &     &     &    &    &   &   \\ \hline
+w  & r  &     &     & l   & j  &    &   &   \\ \hline
+\end{tabular}
+
+## Vowels
+
+```{r}
+map.feature(languages = raw_counts$lang,
+            features = raw_counts$vowel,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            width = 8,
+            tile = "Stamen.Terrain")
+```
+
+## Vowels
+
+```{r}
+map.feature(languages = raw_counts$lang,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            minichart = "pie",
+            minichart.data = raw_counts$vowel,
+            minichart.labels = TRUE,
+            width = 3,
+            tile = "Stamen.Terrain")
+```
+
+## Vowels
+
+* Bezhta (Tsezic) --	21
+* Akhvakh (Andic)	-- 20
+* Hunzib (Tsezic) -- 20
+* ...
+* Aghul (Lezgic) -- 6
+* Tsez (Tsezic) -- 6
+* Avar -- 5
+
+## Vowels
+
+* Bezhta
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+i & i: & iⁿ & y & yⁿ &   &    &    & u & uː & uⁿ \\ \hline
+e &    & eⁿ & ø &    &   &    &    & o & oː & oⁿ \\ \hline
+æ & æː & æⁿ &   &    &   &    &    &   &    &    \\ \hline
+  &    &    &   &    & a & aː & aⁿ &   &    &    \\ \hline
+\end{tabular}
+
+* Avar
+
+\begin{tabular}{|c|c|c|}
+\hline
+i &   & u \\ \hline
+e &   & o \\ \hline
+  & a &   \\ \hline
+\end{tabular}
+
+## Vowels + diphthongs
+
+```{r}
+map.feature(languages = raw_counts$lang,
+            features = raw_counts$`vo+di`,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            width = 8,
+            tile = "Stamen.Terrain")
+```
+
+## Vowels + diphthongs
+
+```{r}
+map.feature(languages = raw_counts$lang,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            minichart = "pie",
+            minichart.data = raw_counts$`vo+di`,
+            minichart.labels = TRUE,
+            width = 3,
+            tile = "Stamen.Terrain")
+```
+
 
 ## Thanks
 
 * to reasercher teams who collected all data
+* to Viola Ivanova for helping with digitalisation of [@kk90]
 * to Linguistic Convergence Laboratory for organising this course\pause
 * and \alert{YOU} for your attention\bigskip\pause
 * if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology) [@moroz2017]
