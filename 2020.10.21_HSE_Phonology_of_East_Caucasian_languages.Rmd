@@ -30,6 +30,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 # qrcode_gen("https://github.com/agricolamz/2020.10.21_HSE_Phonology_of_East_Caucasian_languages/raw/master/2020.10.21_HSE_Phonology_of_East_Caucasian_languages.pdf")
 # dev.off()
 library(tidyverse)
+theme_set(theme_bw())
 library(lingtypology)
 data <- read_csv("data/data.csv")
 ```
@@ -269,9 +270,7 @@ knitr::include_graphics("images/03_systems.png")
 
 ## Phonology of East Caucasian languages can be preseneted like this...
 
-```{r}
-knitr::include_graphics("images/04_johanna.png")
-```
+![](images/04_johanna.png)
 
 \pause
 
@@ -288,8 +287,7 @@ knitr::include_graphics("images/04_johanna.png")
     * you need to be a specialist \pause
 * May be those conclusion could be data driven? \pause
     * some of them can be visualised with a map
-    * some of them can be gahtered via Market basket analysis
-    * some of them can be gahtered via syllable structure analysis
+    * some of them can be gahtered via combinatoric analysis
 
 # Inventory size
 
@@ -451,6 +449,281 @@ map.feature(languages = raw_counts$lang,
             width = 3,
             tile = "Stamen.Terrain")
 ```
+
+# Frequency analysis
+
+## Segments present in all languages
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+b  & d  &   &   &   &   & ɡ &   \\ \hline
+pʰ & tʰ &   &   &   &   &   & ʔ \\ \hline
+   &    & z & ʒ &   &   &   &   \\ \hline
+   &    & s & ʃ &   &   &   & h \\ \hline
+m  & n  &   &   &   &   &   &   \\ \hline
+   & r  &   &   & l & j &   &   \\ \hline
+\end{tabular}
+
+* Where are the famouse ejectives? \pause Udiː
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+b  & d  & dz  & dʒ  &   &   & ɡ  &    &   \\ \hline
+pʰ & tʰ & tsʰ & tʃʰ &   &   & kʰ & qʰ &   \\ \hline
+p  & t  & ts  & tʃ  &   &   & k  & q  & ʔ \\ \hline
+v  &    & z   & ʒ   &   &   &    & ʁ  &   \\ \hline
+f  &    & s   & ʃ   &   &   &    & χ  & h \\ \hline
+m  & n  &     &     &   &   &    &    &   \\ \hline
+w  & r  &     &     & l & j &    &    &   \\ \hline
+\end{tabular}
+
+## Consonants: typical inventory
+
+```{r, eval=FALSE}
+data %>% 
+  filter(sound_type == "consonant") %>% 
+  count(segments_IPA, sort = TRUE) %>% 
+  filter(n > 9) %>% 
+  mutate(segments_IPA = fct_reorder(segments_IPA, n)) %>% 
+  ggplot(aes(n, segments_IPA))+
+  geom_col()+
+  theme(text = element_text(size = 16))+
+  labs(x = "count", y = "")
+ggsave("images/05_cons.png")
+```
+
+```{r}
+knitr::include_graphics("images/05_cons.png")
+```
+
+## Consonants: typical inventory
+
+```{r, eval=FALSE}
+data %>% 
+  filter(sound_type == "consonant") %>% 
+  count(segments_IPA, sort = TRUE) %>% 
+  filter(n > 9) %>% 
+  mutate(segments_IPA = fct_reorder(segments_IPA, n)) %>% 
+  ggplot(aes(n, segments_IPA))+
+  geom_col()+
+  theme(text = element_text(size = 16))+
+  labs(x = "count", y = "")+
+  geom_vline(xintercept = 17, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/06_cons_line.png")
+```
+
+```{r}
+knitr::include_graphics("images/06_cons_line.png")
+```
+
+## Consonants: typical inventory
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+b  & d  &     &     &   &   & ɡ  &    &   &   \\ \hline
+pʰ & tʰ & ts  & tʃʰ &   &   & kʰ & qʰ &   & ʔ \\ \hline
+p’ & t’ & ts’ & tʃ’ &   &   & k’ & q’ &   &   \\ \hline
+   &    &     &     &   &   &    &    &   &   \\ \hline
+   &    &     &     &   &   &    &    &   &   \\ \hline
+   &    & z   & ʒ   &   &   &    & ʁ  & ʢ &   \\ \hline
+w  &    & s   & ʃ   &   &   & x  & χ  & ʜ & h \\ \hline
+m  & n  &     &     &   &   &    &    &   &   \\ \hline
+   & r  &     &     & l & j &    &    &   &   \\ \hline
+\end{tabular}
+
+For more consonants:
+
+* labialisation
+* gemination
+* laterals
+* pharyngealisation
+
+## Vowels: typical inventory
+
+```{r, eval=FALSE}
+data %>% 
+  filter(sound_type == "vowel") %>% 
+  count(segments_IPA, sort = TRUE) %>% 
+  filter(n > 3) %>% 
+  mutate(segments_IPA = fct_reorder(segments_IPA, n)) %>% 
+  ggplot(aes(n, segments_IPA))+
+  geom_col()+
+  theme(text = element_text(size = 16))+
+  labs(x = "count", y = "")+
+  geom_vline(xintercept = 12, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/07_vowels_line.png")
+```
+
+```{r}
+knitr::include_graphics("images/07_vowels_line.png")
+```
+
+## Vowels: typical inventory
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+i & iː &   &    & u & uː \\ \hline
+e &    &   &    & o &    \\ \hline
+  &    & a & aː &   &    \\ \hline
+\end{tabular}
+
+For more vowels:
+
+* length
+* nasalizsation
+
+# Compare to other databases
+
+## PHOIBLE [@phoible]: consonants
+
+```{r, eval = FALSE}
+library(lingtypology)
+df <- phoible.feature()
+df %>% 
+  filter(source == "gm",
+         segmentclass == "consonant") %>% 
+  count(phoneme, sort = TRUE) %>% 
+  mutate(phoneme = fct_reorder(phoneme, n)) %>% 
+  filter(n> 60) %>% 
+  ggplot(aes(n, phoneme))+
+  geom_col()+
+  theme(text = element_text(size = 16))+
+  labs(x = "count", y = "")+
+  geom_vline(xintercept = 200, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/08_cons_phoible.png")
+```
+
+```{r}
+knitr::include_graphics("images/08_cons_phoible.png")
+```
+
+## PHOIBLE [@phoible]: consonants
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+b & d &   & dʒ &   &   & ɡ &   \\ \hline
+p & t &   & tʃ &   &   & k &   \\ \hline
+  &   & z & ʃ  &   &   &   &   \\ \hline
+f &   & s &    &   &   &   & h \\ \hline
+m & n &   &    &   & ɲ & ŋ &   \\ \hline
+w & r &   &    & l & j &   &   \\ \hline
+\end{tabular}
+
+## PHOIBLE [@phoible]: vowels
+
+```{r, eval = FALSE}
+df <- phoible.feature()
+df %>% 
+  filter(source == "gm",
+         segmentclass == "vowel") %>% 
+  count(phoneme, sort = TRUE) %>% 
+  mutate(phoneme = fct_reorder(phoneme, n)) %>% 
+  filter(n> 60) %>% 
+  ggplot(aes(n, phoneme))+
+  geom_col()+
+  theme(text = element_text(size = 16))+
+  labs(x = "count", y = "")+
+  geom_vline(xintercept = 200, color = "lightblue", size = 4, linetype = 2)+
+  geom_vline(xintercept = 300, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/09_vowel_phoible.png")
+```
+
+```{r}
+knitr::include_graphics("images/09_vowel_phoible.png")
+```
+
+
+## Eurasian phonological inventories [@eurasianphonology]: consonants
+
+```{r, eval = FALSE}
+js <- jsonlite::read_json("https://github.com/macleginn/eurasian-phonologies/blob/master/src/dbase/phono_dbase.json?raw=true")
+js %>% 
+  map("cons") %>% 
+  unlist() ->
+  cons
+
+tibble(cons = cons, 
+       source = names(cons)) %>% 
+  mutate(source = str_remove_all(source, "\\#.*")) %>% 
+  count(cons, sort = TRUE) %>% 
+  filter(n> 60) %>% 
+  mutate(cons = fct_reorder(cons, n)) %>% 
+  ggplot(aes(n, cons))+
+  geom_col()+
+  theme(text = element_text(size = 16))+
+  labs(x = "count", y = "")+
+  geom_vline(xintercept = 150, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/10_eurasianphonology_cons.png")
+```
+
+```{r}
+knitr::include_graphics("images/10_eurasianphonology_cons.png")
+```
+
+## Eurasian phonological inventories [@eurasianphonology]: consonants
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+b  & d  &    & dʒ &   &   & ɡ  &   \\ \hline
+p  & t  & ts & tʃ &   &   & k  &   \\ \hline
+pʰ & tʰ &    &    &   &   & kʰ &   \\ \hline
+   &    & z  & ʒ  &   &   &    &   \\ \hline
+f  & v  & s  & ʃ  &   &   & x  & h \\ \hline
+m  & n  &    &    &   & ɲ & ŋ  &   \\ \hline
+w  & r  &    &    & l & j &    &   \\ \hline
+\end{tabular}
+
+## Eurasian phonological inventories [@eurasianphonology]: vowels
+
+```{r, eval = FALSE}
+js %>% 
+  map("vows") %>% 
+  unlist() ->
+  vows
+
+tibble(vows = vows, 
+       source = names(vows)) %>% 
+  mutate(source = str_remove_all(source, "\\#.*")) %>% 
+  count(vows, sort = TRUE) %>% 
+  filter(n> 60) %>% 
+  mutate(vows = fct_reorder(vows, n)) %>% 
+  ggplot(aes(n, vows))+
+  geom_col()+
+  theme(text = element_text(size = 16))+
+  labs(x = "count", y = "")+
+  geom_vline(xintercept = 150, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/11_eurasianphonology_vows.png")
+```
+
+```{r}
+knitr::include_graphics("images/11_eurasianphonology_vows.png")
+```
+
+# Suprasegmental features
+
+## Syllable structure and suprasegmental features
+
+Syllable structure CVCC, sometimes CVL (L -- sonorant or *b*).
+
+A lot of East Caucasian languages has stress:
+
+* some languages has more o less fixed stress (e. g. Mehweb)
+* some languages has a tendency to have stress on first three syllables (Andic languages)
+* a lot of languages distinguish morphological meanings via stress (e. g. plural marker in Dargic languages)
+
+pharyngealization -- mystirius feature (absent only in Andic branch).
+
+\begin{table}[]
+\begin{tabular}{lll}
+d-irʔ-an                &  & d-irʡ-aˤn /d-irʔˤ-an/   \\
+\textsc{npl}-gather:\textsc{ipfv-hab}     &  & \textsc{npl}-gather:\textsc{ipfv-hab}     \\
+‘gathers them’          &  & ‘gathers them’          \\
+                        &  &                         \\
+ħa-d-irʔ-an             &  & ʜaˤ-d-irʡ-aˤn           \\
+\textsc{neg-npl}-gather:\textsc{ipfv-hab} &  & \textsc{neg-npl}-freeze:\textsc{ipfv-hab} \\
+‘does not gather them’  &  & ‘they are not freezing’
+\end{tabular}
+\end{table}
 
 
 ## Thanks
