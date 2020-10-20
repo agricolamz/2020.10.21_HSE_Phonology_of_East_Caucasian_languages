@@ -931,8 +931,8 @@ There are two enclaves: Nakh and Lak-Dargwa.
 * to Linguistic Convergence Laboratory for organising this course\pause
 * and \alert{YOU} for your attention\bigskip\pause
 * if you like presented maps, see [`lingtypology`](https://ropensci.github.io/lingtypology/) [@moroz17]
-* spectrograms were created with [`phonfieldwork`](https://agricolamz.github.io/phonfieldwork/) [@moroz2020]
+* spectrograms were created with [`phonfieldwork`](https://agricolamz.github.io/phonfieldwork/) [@moroz20]
 
-* this presentation made with `rmarkdown` [@yihui18] and `ggplot2` [wickham16]; source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
+* this presentation made with `rmarkdown` [@yihui18] and `ggplot2` [@wickham16]; source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
 
 # References {.allowframebreaks}
