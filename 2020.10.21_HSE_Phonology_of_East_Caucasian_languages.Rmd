@@ -79,6 +79,7 @@ Languages: [@koryakov21]
   \item Botlikh
   \item Godoberi
   \item Chamalal
+  \item Karata
   \item Tindi
   \item Bagvalal
   \item Akhvakh
@@ -126,6 +127,7 @@ Languages: [@koryakov21]
   \item Andi
   \item \alert{Botlikh}
   \item \alert{Godoberi}
+  \item \alert{Karata}
   \item Chamalal
   \item Tindi
   \item \alert{Bagvalal}
@@ -151,13 +153,13 @@ Languages: [@koryakov21]
 
 ## Languages not present in [@kk90]
 
-* Nakh, Chechen
-* Nakh, Ingush
-* Nakh, Tsova-Tush [@holisky94]
+* Andic, Bagvalal [@kibrik01]
+* Andic, Botlikh [@alexeyev21]
+* Andic, Godoberi [@moroz21]
 * Dargwa, Mehweb [@moroz19]
-* Andic, Botlikh
-* Andic, Godoberi
-* Andic, Bagvalal
+* Nakh, Chechen [@nichols94a]
+* Nakh, Ingush [@nichols94b]
+* Nakh, Tsova-Tush [@holisky94]
 
 ## Data
 
@@ -181,12 +183,31 @@ data %>%
 data_m[data_m$lang == "Megeb", 4] <- 42.2528
 data_m[data_m$lang == "Megeb", 5] <- 47.0472
 
+data_m[data_m$lang == "Avar", 4] <- 42.74667
+data_m[data_m$lang == "Avar", 5] <- 46.65917
+
+data_m[data_m$lang == "Chechen", 4] <- 43.04028
+data_m[data_m$lang == "Chechen", 5] <- 45.73028
+
+data_m[data_m$lang == "Ingush", 4] <- 43.026712
+data_m[data_m$lang == "Ingush", 5] <- 44.994647
+
+data_m[data_m$lang == "Udi", 4] <- 41.15083
+data_m[data_m$lang == "Udi", 5] <- 47.45833
+
+data_m[data_m$lang == "Tsakhur", 4] <- 41.15083
+data_m[data_m$lang == "Tsakhur", 5] <- 47.45833
+
+
 map.feature(lang = data_m$lang,
             features = data_m$branch, 
             latitude = data_m$lat,
             longitude = data_m$long,
-            width = 8,
-            tile = "Stamen.Terrain")
+            width = 7,
+            tile = "Stamen.Terrain",
+            minimap = TRUE, 
+            minimap.position = "bottomleft",
+            minimap.width = 300)
 ```
 
 
@@ -239,7 +260,10 @@ map.feature(lang = first_map$lang,
             color = my_colors[16:29],
             width = 3,
             tile = "Stamen.Terrain", 
-            pipe.data = ., legend.position = "topleft")
+            pipe.data = ., legend.position = "topleft",
+            minimap = TRUE, 
+            minimap.position = "bottomleft",
+            minimap.width = 300)
 ```
 
 # Methods
@@ -276,7 +300,7 @@ knitr::include_graphics("images/03_systems.png")
 
 (If you have not seen it, go and wath [our previous lecture](https://youtu.be/gfvauHnP1c4)!)
 
-## Those ways are...
+## These ways are...
 
 * To list all inventories
     * boring, 
@@ -285,9 +309,9 @@ knitr::include_graphics("images/03_systems.png")
 * To present generalisations
     * restricted to peculiarities, \pause
     * you need to be a specialist \pause
-* May be those conclusion could be data driven? \pause
+* May be these conclusions could be data driven? \pause
     * some of them can be visualised with a map
-    * some of them can be gahtered via combinatoric analysis
+    * some of them can be gahtered via frequency and combinatorics analysis
 
 # Inventory size
 
@@ -305,7 +329,7 @@ map.feature(languages = raw_counts$lang,
             features = raw_counts$consonant,
             latitude = raw_counts$lat,
             longitude = raw_counts$long,
-            width = 8,
+            width = 7,
             tile = "Stamen.Terrain")
 ```
 
@@ -352,10 +376,47 @@ w  & r   &      &       &      &       & l    &       & j   &      &     &      
 \end{tabular}
 
 * gemenation
-* labialisation
+* labialization
 
-## Consonants: geminate ejectives
+## Geminate consonants
+```{r}
+data %>% 
+  filter(sound_type == "consonant") %>% 
+  left_join(data_m) %>%
+  mutate(feature = str_detect(segments_IPA, "ː")) %>%
+  group_by(language, branch, lang, lat, long) %>% 
+  summarise(feature = sum(feature)) %>% 
+  mutate(feature = ifelse(feature > 0, "present", "absent")) ->
+  for_map
 
+map.feature(languages = for_map$lang,
+            features = for_map$branch,
+            stroke.features = for_map$feature,
+            latitude = for_map$lat,
+            longitude = for_map$long,
+            width = 6,
+            tile = "Stamen.Terrain")
+```
+
+## Labialised consonants
+```{r}
+data %>% 
+  filter(sound_type == "consonant") %>% 
+  left_join(data_m) %>%
+  mutate(feature = str_detect(segments_IPA, "ʷ")) %>%
+  group_by(language, branch, lang, lat, long) %>% 
+  summarise(feature = sum(feature)) %>% 
+  mutate(feature = ifelse(feature > 0, "present", "absent")) ->
+  for_map
+
+map.feature(languages = for_map$lang,
+            features = for_map$branch,
+            stroke.features = for_map$feature,
+            latitude = for_map$lat,
+            longitude = for_map$long,
+            width = 6,
+            tile = "Stamen.Terrain")
+```
 
 
 ## Consonants: Inkhoqwari
@@ -378,7 +439,7 @@ map.feature(languages = raw_counts$lang,
             features = raw_counts$vowel,
             latitude = raw_counts$lat,
             longitude = raw_counts$long,
-            width = 8,
+            width = 7,
             tile = "Stamen.Terrain")
 ```
 
@@ -400,6 +461,7 @@ map.feature(languages = raw_counts$lang,
 * Bezhta (Tsezic) --	21
 * Akhvakh (Andic)	-- 20
 * Hunzib (Tsezic) -- 20
+* Bagvalal (Andic) -- 20
 * ...
 * Aghul (Lezgic) -- 6
 * Tsez (Tsezic) -- 6
@@ -426,6 +488,49 @@ e &   & o \\ \hline
   & a &   \\ \hline
 \end{tabular}
 
+## Nasal vowels
+
+```{r}
+data %>% 
+  left_join(data_m) %>% 
+  mutate(feature = str_detect(segments_IPA, "ⁿ")) %>%
+  group_by(language, branch, lang, lat, long) %>% 
+  summarise(feature = sum(feature)) %>% 
+  mutate(feature = ifelse(feature > 0, "present", "absent")) ->
+  for_map
+
+map.feature(languages = for_map$lang,
+            features = for_map$branch,
+            stroke.features = for_map$feature,
+            latitude = for_map$lat,
+            longitude = for_map$long,
+            width = 6,
+            tile = "Stamen.Terrain")
+```
+
+According to our data Avar, Hinuq, and Tsez don't have nasalized vowels.
+
+## Long vowels
+
+```{r}
+data %>% 
+  left_join(data_m) %>% 
+  filter(sound_type == "vowel") %>% 
+  mutate(feature = str_detect(segments_IPA, "ː")) %>%
+  group_by(language, branch, lang, lat, long) %>% 
+  summarise(feature = sum(feature)) %>% 
+  mutate(feature = ifelse(feature > 0, "present", "absent")) ->
+  for_map
+
+map.feature(languages = for_map$lang,
+            features = for_map$branch,
+            stroke.features = for_map$feature,
+            latitude = for_map$lat,
+            longitude = for_map$long,
+            width = 6,
+            tile = "Stamen.Terrain")
+```
+
 ## Vowels + diphthongs
 
 ```{r}
@@ -433,7 +538,7 @@ map.feature(languages = raw_counts$lang,
             features = raw_counts$`vo+di`,
             latitude = raw_counts$lat,
             longitude = raw_counts$long,
-            width = 8,
+            width = 7,
             tile = "Stamen.Terrain")
 ```
 
@@ -724,6 +829,27 @@ d-irʔ-an                &  & d-irʡ-aˤn /d-irʔˤ-an/   \\
 ‘does not gather them’  &  & ‘they are not freezing’
 \end{tabular}
 \end{table}
+
+## Pharyngealization
+
+```{r}
+data %>% 
+  left_join(data_m) %>% 
+  mutate(feature = str_detect(segments_IPA, "ˤ")) %>%
+  group_by(language, branch, lang, lat, long) %>% 
+  summarise(feature = sum(feature)) %>% 
+  mutate(feature = ifelse(feature > 0, "present", "absent")) ->
+  for_map
+
+map.feature(languages = for_map$lang,
+            features = for_map$branch,
+            stroke.features = for_map$feature,
+            latitude = for_map$lat,
+            longitude = for_map$long,
+            width = 6,
+            tile = "Stamen.Terrain")
+```
+
 
 
 ## Thanks
