@@ -344,7 +344,7 @@ raw_counts %>%
   ggplot(aes(consonant))+
   geom_histogram()+
   theme(text = element_text(size = 16))+
-  labs(x = "consonant invetory size")
+  labs(x = "consonant invetory size", y = "number of languages")
 ```
 
 Most of the languages have 42\pm 5 consonants.
@@ -474,6 +474,27 @@ map.feature(languages = for_map$lang,
 ```
 Labialised consonants are absent in Nakh, but more or less common through other branches.
 
+## Lateral consonants
+```{r}
+data %>% 
+  filter(sound_type == "consonant") %>% 
+  left_join(data_m) %>%
+  mutate(feature = str_detect(segments_IPA, "ɬ")) %>%
+  group_by(language, branch, lang, lat, long) %>% 
+  summarise(feature = sum(feature)) %>% 
+  mutate(feature = ifelse(feature > 0, "present", "absent")) ->
+  for_map
+
+map.feature(languages = for_map$lang,
+            features = for_map$branch,
+            stroke.features = for_map$feature,
+            latitude = for_map$lat,
+            longitude = for_map$long,
+            width = 6,
+            tile = "Stamen.Terrain")
+```
+It is looks like an areal pattern: all Avar-Andic and Tsezic, but also Tsova-Tush and Archi.
+
 ## Vowels
 
 ```{r}
@@ -496,7 +517,7 @@ raw_counts %>%
   ggplot(aes(vowel))+
   geom_histogram()+
   theme(text = element_text(size = 16))+
-  labs(x = "vowel invetory size")
+  labs(x = "vowel invetory size", y = "number of languages")
 ```
 Most of the languages have 10±5 vowels.
 
@@ -588,29 +609,27 @@ map.feature(languages = for_map$lang,
 ```
 Long vowels are common to all branches.
 
-## Vowels + diphthongs
+## Diphthongs
 
 ```{r}
-map.feature(languages = raw_counts$lang,
-            features = raw_counts$`vo+di`,
-            latitude = raw_counts$lat,
-            longitude = raw_counts$long,
-            width = 7,
+data %>% 
+  left_join(data_m) %>%
+  mutate(feature = str_detect(sound_type, "diphthong")) %>%
+  group_by(language, branch, lang, lat, long) %>% 
+  summarise(feature = sum(feature)) %>% 
+  mutate(feature = ifelse(feature > 0, "present", "absent")) ->
+  for_map
+
+map.feature(languages = for_map$lang,
+            features = for_map$branch,
+            stroke.features = for_map$feature,
+            latitude = for_map$lat,
+            longitude = for_map$long,
+            width = 6,
             tile = "Stamen.Terrain")
 ```
 
-## Vowels + diphthongs
-
-```{r}
-map.feature(languages = raw_counts$lang,
-            latitude = raw_counts$lat,
-            longitude = raw_counts$long,
-            minichart = "pie",
-            minichart.data = raw_counts$`vo+di`,
-            minichart.labels = TRUE,
-            width = 3,
-            tile = "Stamen.Terrain")
-```
+Diphtongs are present only in Nakh.
 
 # Frequency analysis
 
