@@ -671,13 +671,13 @@ w  & r  &     &     & l & j &    &    &   \\ \hline
 data %>% 
   filter(sound_type == "consonant") %>% 
   count(segments_IPA, sort = TRUE) %>% 
-  filter(n > 12) %>% 
+  filter(n > 15) %>% 
   mutate(segments_IPA = fct_reorder(segments_IPA, n)) %>% 
   ggplot(aes(n, segments_IPA))+
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")
-ggsave("images/05_cons.png")
+ggsave("images/05_cons.png", width = 9)
 ```
 
 ![](images/05_cons.png)
@@ -695,7 +695,7 @@ data %>%
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
   geom_vline(xintercept = 20, color = "lightblue", size = 4, linetype = 2)
-ggsave("images/06_cons_line.png")
+ggsave("images/06_cons_line.png", width = 9)
 ```
 
 ![](images/06_cons_line.png)
@@ -733,7 +733,7 @@ data %>%
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
   geom_vline(xintercept = 15, color = "lightblue", size = 4, linetype = 2)
-ggsave("images/07_vowels_line.png")
+ggsave("images/07_vowels_line.png", width = 9)
 ```
 
 ![](images/07_vowels_line.png)
@@ -875,7 +875,7 @@ ggsave("images/11_eurasianphonology_vows.png")
 * East Caucasian consonant systems are more or less typical \pause
     * except uvular and laryngeal consonants
     * except ejective consonants
-    * except laterals in Avar-Andic branch
+    * except laterals in Avar-Andic and Tsezic branches
     * except labialisation
     * except gemination \pause
 * East Caucasian vowel systems are typical
