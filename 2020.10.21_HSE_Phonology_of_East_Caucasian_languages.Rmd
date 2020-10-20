@@ -32,7 +32,32 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 theme_set(theme_bw())
 library(lingtypology)
+library(phonfieldwork)
 data <- read_csv("data/data.csv")
+data %>% 
+  distinct(glottocode, branch) %>%
+  mutate(lang = lang.gltc(glottocode),
+         lat = lat.lang(lang),
+         long = long.lang(lang)) ->
+  data_m
+
+data_m[data_m$lang == "Megeb", 4] <- 42.2528
+data_m[data_m$lang == "Megeb", 5] <- 47.0472
+
+data_m[data_m$lang == "Avar", 4] <- 42.74667
+data_m[data_m$lang == "Avar", 5] <- 46.65917
+
+data_m[data_m$lang == "Chechen", 4] <- 43.04028
+data_m[data_m$lang == "Chechen", 5] <- 45.73028
+
+data_m[data_m$lang == "Ingush", 4] <- 43.026712
+data_m[data_m$lang == "Ingush", 5] <- 44.994647
+
+data_m[data_m$lang == "Udi", 4] <- 41.15083
+data_m[data_m$lang == "Udi", 5] <- 47.45833
+
+data_m[data_m$lang == "Tsakhur", 4] <- 41.15083
+data_m[data_m$lang == "Tsakhur", 5] <- 47.45833
 ```
 
 # Introduction
@@ -174,32 +199,6 @@ cat(paste0("* ", colnames(data), "\n"))
 ## Data (language view)
 
 ```{r}
-data %>% 
-  distinct(glottocode, branch) %>%
-  mutate(lang = lang.gltc(glottocode),
-         lat = lat.lang(lang),
-         long = long.lang(lang)) ->
-  data_m
-
-data_m[data_m$lang == "Megeb", 4] <- 42.2528
-data_m[data_m$lang == "Megeb", 5] <- 47.0472
-
-data_m[data_m$lang == "Avar", 4] <- 42.74667
-data_m[data_m$lang == "Avar", 5] <- 46.65917
-
-data_m[data_m$lang == "Chechen", 4] <- 43.04028
-data_m[data_m$lang == "Chechen", 5] <- 45.73028
-
-data_m[data_m$lang == "Ingush", 4] <- 43.026712
-data_m[data_m$lang == "Ingush", 5] <- 44.994647
-
-data_m[data_m$lang == "Udi", 4] <- 41.15083
-data_m[data_m$lang == "Udi", 5] <- 47.45833
-
-data_m[data_m$lang == "Tsakhur", 4] <- 41.15083
-data_m[data_m$lang == "Tsakhur", 5] <- 47.45833
-
-
 map.feature(lang = data_m$lang,
             features = data_m$branch, 
             latitude = data_m$lat,
@@ -294,7 +293,7 @@ knitr::include_graphics("images/03_systems.png")
 * it is hard to make generalisations (at least, on the fly)
 
 ## Phonology of East Caucasian languages can be preseneted like this...
-
+      
 ![](images/04_johanna.png)
 
 \pause
@@ -327,17 +326,6 @@ data %>%
   raw_counts
 
 map.feature(languages = raw_counts$lang,
-            features = raw_counts$consonant,
-            latitude = raw_counts$lat,
-            longitude = raw_counts$long,
-            width = 7,
-            tile = "Stamen.Terrain")
-```
-
-## Consonants
-
-```{r}
-map.feature(languages = raw_counts$lang,
             latitude = raw_counts$lat,
             longitude = raw_counts$long,
             minichart = "pie",
@@ -346,6 +334,33 @@ map.feature(languages = raw_counts$lang,
             width = 3,
             tile = "Stamen.Terrain")
 ```
+
+Languages ranges from 33 to 91 consonants.
+
+## Consonants
+
+```{r}
+raw_counts %>% 
+  ggplot(aes(consonant))+
+  geom_histogram()+
+  theme(text = element_text(size = 16))+
+  labs(x = "consonant invetory size")
+```
+
+Most of the languages have 42\pm 5 consonants.
+
+## Consonants
+
+```{r}
+map.feature(languages = raw_counts$lang,
+            features = raw_counts$consonant,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            width = 7,
+            tile = "Stamen.Terrain")
+```
+
+Most of the huge systems are presented in Andic and grouped together.
 
 ## Consonants
 
@@ -358,7 +373,11 @@ map.feature(languages = raw_counts$lang,
 * Bezhta (Tsezic) -- 34
 * Inkhoqwari (Tsezic) -- 33
 
-## Consonants: Akwakh
+* ejectives
+* gemenation (fortis)
+* labialization
+
+## Consonants: Akwakh vs. Inkhoqwari
 \small
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -376,8 +395,42 @@ m  & n   &      &       &      &       &      &       &     &      &     &      
 w  & r   &      &       &      &       & l    &       & j   &      &     &      &   &    \\ \hline
 \end{tabular}
 
-* gemenation
-* labialization
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+b  & d  &     & dʒ  &     & ɡ  &    &   &   \\ \hline
+pʰ & tʰ & ts  & tʃ  & tɬ  & k  & q  &   & ʔ \\ \hline
+p’ & t’ & ts’ & tʃ’ & tɬ’ & k’ & q’ &   &   \\ \hline
+   &    & z   & ʒ   &     &    & ʁ  & ʢ &   \\ \hline
+   &    & s   & ʃ   & ɬ   &    & χ  & ʜ & h \\ \hline
+m  & n  &     &     &     &    &    &   &   \\ \hline
+w  & r  &     &     & l   & j  &    &   &   \\ \hline
+\end{tabular}
+
+## Gemination and ejectives (example from Zilo Andi)
+
+```{r, eval = FALSE}
+draw_sound(file_name = "data/k.wav",
+           annotation = "data/k.TextGrid", 
+           text_size = 2.2,
+           spectrum_info = FALSE,
+           output_file = "images/12_gemination_example")
+```
+![](images/12_gemination_example.png)
+
+* Geminated aspirated have longer closure. 
+* Geminated ejectives have longer burst. 
+
+## Laterals (example from Zilo Andi)
+```{r, eval = FALSE}
+draw_sound(file_name = "data/lateral.wav",
+           annotation = "data/lateral.TextGrid", 
+           text_size = 2.2,
+           spectrum_info = FALSE,
+           output_file = "images/13_lateral_example")
+```
+![](images/13_lateral_example.png)
+
+Looks like it is not tɬ' but tɬ'ː in Andic...
 
 ## Geminate consonants
 ```{r}
@@ -398,6 +451,7 @@ map.feature(languages = for_map$lang,
             width = 6,
             tile = "Stamen.Terrain")
 ```
+Geminate consonants are absent in Tsezic and most Lezgic.
 
 ## Labialised consonants
 ```{r}
@@ -418,31 +472,7 @@ map.feature(languages = for_map$lang,
             width = 6,
             tile = "Stamen.Terrain")
 ```
-
-
-## Consonants: Inkhoqwari
-
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline
-b  & d  &     & dʒ  &     & ɡ  &    &   &   \\ \hline
-pʰ & tʰ & ts  & tʃ  & tɬ  & k  & q  &   & ʔ \\ \hline
-p’ & t’ & ts’ & tʃ’ & tɬ’ & k’ & q’ &   &   \\ \hline
-   &    & z   & ʒ   &     &    & ʁ  & ʢ &   \\ \hline
-   &    & s   & ʃ   & ɬ   &    & χ  & ʜ & h \\ \hline
-m  & n  &     &     &     &    &    &   &   \\ \hline
-w  & r  &     &     & l   & j  &    &   &   \\ \hline
-\end{tabular}
-
-## Vowels
-
-```{r}
-map.feature(languages = raw_counts$lang,
-            features = raw_counts$vowel,
-            latitude = raw_counts$lat,
-            longitude = raw_counts$long,
-            width = 7,
-            tile = "Stamen.Terrain")
-```
+Labialised consonants are absent in Nakh, but more or less common through other branches.
 
 ## Vowels
 
@@ -456,6 +486,19 @@ map.feature(languages = raw_counts$lang,
             width = 3,
             tile = "Stamen.Terrain")
 ```
+
+Languages ranges from 5 to 21 vowels.
+
+
+## Vowels
+```{r}
+raw_counts %>% 
+  ggplot(aes(vowel))+
+  geom_histogram()+
+  theme(text = element_text(size = 16))+
+  labs(x = "vowel invetory size")
+```
+Most of the languages have 10±5 vowels.
 
 ## Vowels
 
@@ -489,6 +532,18 @@ e &   & o \\ \hline
   & a &   \\ \hline
 \end{tabular}
 
+## Vowels
+
+```{r}
+map.feature(languages = raw_counts$lang,
+            features = raw_counts$vowel,
+            latitude = raw_counts$lat,
+            longitude = raw_counts$long,
+            width = 7,
+            tile = "Stamen.Terrain")
+```
+Most of the huge systems are presented in Tsezic and Andic.
+
 ## Nasal vowels
 
 ```{r}
@@ -509,7 +564,7 @@ map.feature(languages = for_map$lang,
             tile = "Stamen.Terrain")
 ```
 
-According to our data Avar, Hinuq, and Tsez don't have nasalized vowels.
+From Andic and Tsezic only Avar, Hinuq, and Tsez lack nasalized vowels.
 
 ## Long vowels
 
@@ -531,6 +586,7 @@ map.feature(languages = for_map$lang,
             width = 6,
             tile = "Stamen.Terrain")
 ```
+Long vowels are common to all branches.
 
 ## Vowels + diphthongs
 
@@ -596,7 +652,7 @@ w  & r  &     &     & l & j &    &    &   \\ \hline
 data %>% 
   filter(sound_type == "consonant") %>% 
   count(segments_IPA, sort = TRUE) %>% 
-  filter(n > 9) %>% 
+  filter(n > 12) %>% 
   mutate(segments_IPA = fct_reorder(segments_IPA, n)) %>% 
   ggplot(aes(n, segments_IPA))+
   geom_col()+
@@ -613,13 +669,13 @@ ggsave("images/05_cons.png")
 data %>% 
   filter(sound_type == "consonant") %>% 
   count(segments_IPA, sort = TRUE) %>% 
-  filter(n > 9) %>% 
+  filter(n > 12) %>% 
   mutate(segments_IPA = fct_reorder(segments_IPA, n)) %>% 
   ggplot(aes(n, segments_IPA))+
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
-  geom_vline(xintercept = 17, color = "lightblue", size = 4, linetype = 2)
+  geom_vline(xintercept = 20, color = "lightblue", size = 4, linetype = 2)
 ggsave("images/06_cons_line.png")
 ```
 
@@ -632,8 +688,6 @@ ggsave("images/06_cons_line.png")
 b  & d  &     &     &   &   & ɡ  &    &   &   \\ \hline
 pʰ & tʰ & ts  & tʃʰ &   &   & kʰ & qʰ &   & ʔ \\ \hline
 p’ & t’ & ts’ & tʃ’ &   &   & k’ & q’ &   &   \\ \hline
-   &    &     &     &   &   &    &    &   &   \\ \hline
-   &    &     &     &   &   &    &    &   &   \\ \hline
    &    & z   & ʒ   &   &   &    & ʁ  & ʢ &   \\ \hline
 w  &    & s   & ʃ   &   &   & x  & χ  & ʜ & h \\ \hline
 m  & n  &     &     &   &   &    &    &   &   \\ \hline
@@ -659,7 +713,7 @@ data %>%
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
-  geom_vline(xintercept = 12, color = "lightblue", size = 4, linetype = 2)
+  geom_vline(xintercept = 15, color = "lightblue", size = 4, linetype = 2)
 ggsave("images/07_vowels_line.png")
 ```
 
@@ -678,6 +732,7 @@ For more vowels:
 
 * length
 * nasalizsation
+* pharyngealization
 
 # Compare to other databases
 
@@ -796,7 +851,15 @@ ggsave("images/11_eurasianphonology_vows.png")
 
 ![](images/11_eurasianphonology_vows.png)
 
-## Comparison
+## Conclusions
+
+* East Caucasian consonant systems are more or less typical \pause
+    * except uvular and laryngeal consonants
+    * except ejective consonants
+    * except laterals in Avar-Andic branch
+    * except labialisation
+    * except gemination \pause
+* East Caucasian vowel systems are typical
 
 # Suprasegmental features
 
@@ -810,7 +873,7 @@ A lot of East Caucasian languages has stress:
 * some languages has a tendency to have stress on first three syllables (Andic languages)
 * a lot of languages distinguish morphological meanings via stress (e. g. plural marker in Dargic languages)
 
-pharyngealization -- mystirius feature (absent only in Andic branch).
+pharyngealization -- mystirius feature (absent in Andic branch).
 
 \begin{table}[]
 \begin{tabular}{lll}
@@ -824,6 +887,17 @@ d-irʔ-an                &  & d-irʡ-aˤn /d-irʔˤ-an/   \\
 \end{tabular}
 \end{table}
 
+## Pharyngealization (example from Mehweb Dargwa)
+```{r, eval = FALSE}
+draw_sound(file_name = "data/epig.wav",
+           annotation = "data/epig.TextGrid", 
+           text_size = 2.2,
+           spectrum_info = FALSE,
+           output_file = "images/14_epig_example")
+```
+![](images/14_epig_example.png)
+
+
 ## Pharyngealization
 
 ```{r}
@@ -835,6 +909,10 @@ data %>%
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
 
+for_map[for_map$lang == "Chechen", "feature"] <- "present"
+for_map[for_map$lang == "Ingush", "feature"] <- "present"
+for_map[for_map$lang == "Bats", "feature"] <- "present"
+
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
@@ -844,7 +922,7 @@ map.feature(languages = for_map$lang,
             tile = "Stamen.Terrain")
 ```
 
-
+There are two enclaves: Nakh and Lak-Dargwa.
 
 ## Thanks
 
@@ -852,7 +930,9 @@ map.feature(languages = for_map$lang,
 * to Viola Ivanova for helping with digitalisation of [@kk90]
 * to Linguistic Convergence Laboratory for organising this course\pause
 * and \alert{YOU} for your attention\bigskip\pause
-* if you like presented maps, see [`lingtypology`](https://github.com/ropensci/lingtypology) [@moroz2017]
-* this presentation made with `rmarkdown` [@yihui18]; source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
+* if you like presented maps, see [`lingtypology`](https://ropensci.github.io/lingtypology/) [@moroz17]
+* spectrograms were created with [`phonfieldwork`](https://agricolamz.github.io/phonfieldwork/) [@moroz2020]
+
+* this presentation made with `rmarkdown` [@yihui18] and `ggplot2` [wickham16]; source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
 
 # References {.allowframebreaks}

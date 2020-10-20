@@ -1,0 +1,52 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 3.8732083333333334 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "1" 
+        xmin = 0 
+        xmax = 3.8732083333333334 
+        intervals: size = 4 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.931242817272233 
+            text = "rekʰun" 
+        intervals [2]:
+            xmin = 0.931242817272233 
+            xmax = 1.8776069138279514 
+            text = "tʃʰakːu" 
+        intervals [3]:
+            xmin = 1.8776069138279514 
+            xmax = 2.8095227035660253 
+            text = "rek'ul" 
+        intervals [4]:
+            xmin = 2.8095227035660253 
+            xmax = 3.8732083333333334 
+            text = "rek'ːu" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "2" 
+        xmin = 0 
+        xmax = 3.8732083333333334 
+        intervals: size = 4 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.931242817272233 
+            text = "thread" 
+        intervals [2]:
+            xmin = 0.931242817272233 
+            xmax = 1.8776069138279514 
+            text = "yellow" 
+        intervals [3]:
+            xmin = 1.8776069138279514 
+            xmax = 2.8095227035660253 
+            text = "key" 
+        intervals [4]:
+            xmin = 2.8095227035660253 
+            xmax = 3.8732083333333334 
+            text = "pinetree" 
