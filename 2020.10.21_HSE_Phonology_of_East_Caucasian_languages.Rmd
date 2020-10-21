@@ -946,6 +946,8 @@ There are two enclaves: Nakh and Lak-Dargwa.
 
 * to the teams of researchers who collected all the data
 * to Viola Ivanova for helping with digitalization of [@kk90]
+* to Nina Dobrushia and Samira Verhees for their comments on this presentation
+* to Misha Daniel for his comments on this presentation in my dream
 * to Linguistic Convergence Laboratory for organising this course\pause
 * and \alert{YOU} for your attention\bigskip\pause
 * if you like the presented maps, see [`lingtypology`](https://ropensci.github.io/lingtypology/) [@moroz17]
