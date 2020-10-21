@@ -73,7 +73,7 @@ data_m[data_m$lang == "Tsakhur", 5] <- 47.45833
 Caucasus: [@begus21], [@boris21b], [@boris21a]
     * Handbook of Caucasian
 Languages: [@koryakov21]
-    * and phonological part in more general descriptions of East Caucasian languages
+    * and phonological parts in more general descriptions of East Caucasian languages
 * historical-comparative phonetics
     * S. M. Gasanova, G. Kh. Ibragimov, P. T. Magomedova, U. A. Meylanova, B. B. Talibov, S. M. Khaydakov, A. E. Alekseev, Ju. D. Desheriev, B. K. Gigineishvili, D. S. Imnaishvili, J. Nichols, S. L. Nikolayev, S. A. Starostin, A. S. Kasyan, N. A. Ardoteli, O. A. Mudrak
 
@@ -81,10 +81,10 @@ Languages: [@koryakov21]
     
 During the talk we will:
 
-* discuss consonant and vowel inventories size of East Caucasian languages 
-* explore sounds that are typicall for East Caucasian languages
-* try to figure out what is the typical inventory consists of
-* compare with other typological databases (PHOIBLE [@phoible], Eurasian phonological inventories [@eurasianphonology])
+* discuss the size of consonant and vowel inventories of East Caucasian languages 
+* explore sounds that are typical for East Caucasian languages
+* try to figure out what a typical inventory consists of
+* compare with typological databases (PHOIBLE [@phoible], Eurasian phonological inventories [@eurasianphonology])
 
 # Data
 
@@ -296,19 +296,19 @@ map.feature(lang = first_map$lang,
 
 # Methods
 
-## Phonology of East Caucasian languages can be preseneted like this...
+## Phonology of East Caucasian languages can be presented like this...
 
-* To list all inventories one by one
+* List all inventories one by one
     * boring, 
     * mechanical, 
-    * hard to make generalisations (at least, on the fly) \pause
-* To present generalisations (like Johanna Nichols during the [previous talk](https://youtu.be/gfvauHnP1c4))
+    * hard to make generalizations (at least, on the fly) \pause
+* To present generalizations (like Johanna Nichols during the [previous talk](https://youtu.be/gfvauHnP1c4))
     * restricted to peculiarities, 
     * you need to be a specialist \pause
-* May be conclusions presented by Johanna Nichols could be data driven? \pause
+* Maybe similar generalizations can be made with a data driven analysis? \pause
     * some of them can be visualised with a map
     * some of them can be gahtered via frequency and combinatorics analysis \pause
-    * it is not something new, more or less the same thing have been done for Australian languages [@gasser14]
+    * this is not something new, more or less the same thing has been done for Australian languages [@gasser14]
 
 # Inventory size
 
@@ -332,7 +332,7 @@ map.feature(languages = raw_counts$lang,
             tile = "Stamen.Terrain")
 ```
 
-Languages ranges from 33 to 91 consonants.
+Consonant inventories range from 33 to 91 consonants.
 
 ## Consonants
 
@@ -357,11 +357,11 @@ map.feature(languages = raw_counts$lang,
             tile = "Stamen.Terrain")
 ```
 
-Most of the huge systems are presented in Andic and grouped together.
+Most of the huge systems are represented in Andic and grouped together.
 
 ## Consonants
 
-* Akhwakh (Andic) -- 91
+* Akhvakh (Andic) -- 91
 * Tindi (Andic) -- 84
 * Chamalal (Andic) -- 73
 * Archi (Lezgic) -- 78
@@ -371,10 +371,10 @@ Most of the huge systems are presented in Andic and grouped together.
 * Inkhoqwari (Tsezic) -- 33
 
 * ejectives
-* gemenation (fortis)
+* gemination (fortis)
 * labialization
 
-## Consonants: Akwakh vs. Inkhoqwari
+## Consonants: Akhvakh vs. Inkhoqwari
 \small
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -450,7 +450,7 @@ map.feature(languages = for_map$lang,
 ```
 Geminate consonants are absent in Tsezic and most Lezgic.
 
-## Labialised consonants
+## Labialized consonants
 ```{r}
 data %>% 
   filter(sound_type == "consonant") %>% 
@@ -469,7 +469,7 @@ map.feature(languages = for_map$lang,
             width = 6,
             tile = "Stamen.Terrain")
 ```
-Labialised consonants are absent in Nakh, but more or less common through other branches.
+Labialized consonants are absent in Nakh, but more or less common through other branches.
 
 ## Lateral consonants
 ```{r}
@@ -490,7 +490,7 @@ map.feature(languages = for_map$lang,
             width = 6,
             tile = "Stamen.Terrain")
 ```
-It is looks like an areal pattern: all Avar-Andic and Tsezic, but also Tsova-Tush and Archi.
+It looks like an areal pattern: all Avar-Andic and Tsezic, but also Tsova-Tush and Archi.
 
 ## Vowels
 
@@ -626,7 +626,7 @@ map.feature(languages = for_map$lang,
             tile = "Stamen.Terrain")
 ```
 
-Diphtongs are present only in Nakh.
+Diphtongs are present only in Nakh. 
 
 # Frequency analysis
 
@@ -649,7 +649,7 @@ m  & n  &   &   &   &   &   &   \\ \hline
    & r  &   &   & l & j &   &   \\ \hline
 \end{tabular}
 
-* Where are the famouse ejectives? \pause Udiː
+* Where are the famous ejectives? \pause Udi: 
 
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -712,10 +712,10 @@ m  & n  &     &     &   &   &    &    &   &   \\ \hline
 
 For more consonants:
 
-* labialisation
+* labialization
 * gemination
 * laterals
-* pharyngealisation
+* pharyngealization
 
 ## Vowels: typical inventory
 
@@ -747,10 +747,10 @@ e &    &   &    & o &    \\ \hline
 For more vowels:
 
 * length
-* nasalizsation
+* nasalization
 * pharyngealization
 
-# Compare to other databases
+# Comparison to other databases
 
 ## PHOIBLE [@phoible]: consonants
 
@@ -873,7 +873,7 @@ ggsave("images/11_eurasianphonology_vows.png")
     * except uvular and laryngeal consonants
     * except ejective consonants
     * except laterals in Avar-Andic and Tsezic branches
-    * except labialisation
+    * except labialization
     * except gemination \pause
 * East Caucasian vowel systems are typical \pause
 * All these conclusions were data driven \pause
@@ -885,13 +885,13 @@ ggsave("images/11_eurasianphonology_vows.png")
 
 Syllable structure CVCC, sometimes CVL (L -- sonorant or *b*).
 
-A lot of East Caucasian languages has stress:
+A lot of East Caucasian languages have stress:
 
 * some languages has more o less fixed stress (e. g. Mehweb)
 * some languages has a tendency to have stress on first three syllables (Andic languages)
-* a lot of languages distinguish morphological meanings via stress (e. g. plural marker in Dargic languages)
+* a lot of languages distinguish morphological meanings via stress (e.g. plural marker in Dargic languages)
 
-pharyngealization -- mystirius feature (absent in Andic branch).
+pharyngealization -- mysterious feature (absent in Andic branch).
 
 \begin{table}[]
 \begin{tabular}{lll}
@@ -944,13 +944,13 @@ There are two enclaves: Nakh and Lak-Dargwa.
 
 ## Thanks
 
-* to reasercher teams who collected all data
-* to Viola Ivanova for helping with digitalisation of [@kk90]
+* to the teams of researchers who collected all the data
+* to Viola Ivanova for helping with digitalization of [@kk90]
 * to Linguistic Convergence Laboratory for organising this course\pause
 * and \alert{YOU} for your attention\bigskip\pause
-* if you like presented maps, see [`lingtypology`](https://ropensci.github.io/lingtypology/) [@moroz17]
+* if you like the presented maps, see [`lingtypology`](https://ropensci.github.io/lingtypology/) [@moroz17]
 * spectrograms were created with [`phonfieldwork`](https://agricolamz.github.io/phonfieldwork/) [@moroz20]
 
-* this presentation made with `rmarkdown` [@yihui18] and `ggplot2` [@wickham16]; source code and data for this presentation are availible online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
+* this presentation was made with `rmarkdown` [@yihui18] and `ggplot2` [@wickham16]; source code and data for this presentation are available online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
 
 # References {.allowframebreaks}
