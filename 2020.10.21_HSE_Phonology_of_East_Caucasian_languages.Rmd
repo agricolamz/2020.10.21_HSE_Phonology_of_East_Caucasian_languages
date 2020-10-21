@@ -301,9 +301,9 @@ map.feature(lang = first_map$lang,
 * To list all inventories one by one
     * boring, 
     * mechanical, 
-    * hard to make generalisations (at least, on the fly)
+    * hard to make generalisations (at least, on the fly) \pause
 * To present generalisations (like Johanna Nichols during the [previous talk](https://youtu.be/gfvauHnP1c4))
-    * restricted to peculiarities, \pause
+    * restricted to peculiarities, 
     * you need to be a specialist \pause
 * May be conclusions presented by Johanna Nichols could be data driven? \pause
     * some of them can be visualised with a map
