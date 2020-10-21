@@ -62,9 +62,11 @@ data_m[data_m$lang == "Tsakhur", 5] <- 47.45833
 colors <- read_tsv("https://raw.githubusercontent.com/sverhees/master_villages/master/data/meta.csv")
 
 colors %>% 
-  distinct(glottocode, lang_color_pale, lang) %>% 
+  distinct(glottocode, lang_color, lang) %>% 
+  mutate(lang_color_pale = lang_color) %>% 
+  select(-lang_color) %>% 
   bind_rows(tibble(glottocode = "sout3261",
-                   lang_color_pale = "#ffb84d"))->
+                   lang_color_pale = "#ff9900"))->
   colors
 
 data_m %>% 
@@ -108,7 +110,7 @@ During the talk we will:
 \begin{itemize}
   \item Chechen
   \item Ingush
-  \item Tsova-Tush (Bats, Batsbi)
+  \item Tsova-Tush (Batsbi)
 \end{itemize}
 \item Tsezic (Didoic)
 \begin{itemize}
@@ -157,7 +159,7 @@ During the talk we will:
 \begin{itemize}
   \item \alert{Chechen}
   \item \alert{Ingush}
-  \item \alert{Tsova-Tush (Bats, Batsbi)}
+  \item \alert{Tsova-Tush (Batsbi)}
 \end{itemize}
 \item Tsezic (Didoic)
 \begin{itemize}
@@ -309,18 +311,18 @@ map.feature(lang = first_map$lang2,
             features = first_map$lang, 
             latitude = first_map$lat,
             longitude = first_map$lon,
-            color = c("#1aff8c", # "Agul", 
-                      "#c6ff1a", # "Archi",
-                      "#00b300", # "Budukh",
-                      "#00e64d", # "Kryz",
-                      "#1aff1a", # "Lezgian",
-                      "#00e600", # "Rutul",
-                      "#53c68c", # "Tabasaran",
-                      "#99e600", # "Tsakhur",
-                      "#008000", # "Udi",
-                      "#ffb84d", # "Dargwa",
-                      "#ffc61a", # "Lak",
-                      "#ffff1a"  # "Khinalug"
+            color = c("#00cc66", # "Agul", 
+                      "#99cc00", # "Archi",
+                      "#006600", # "Budukh",
+                      "#009933", # "Kryz",
+                      "#00cc00", # "Lezgian",
+                      "#009900", # "Rutul",
+                      "#339966", # "Tabasaran",
+                      "#669900", # "Tsakhur",
+                      "#004d00", # "Udi",
+                      "#ff9900", # "Dargwa",
+                      "#cc9900", # "Lak",
+                      "#cccc00"  # "Khinalug"
             ),
             width = 3,
             tile = "Stamen.Terrain") %>% 
@@ -328,22 +330,22 @@ map.feature(lang = first_map$lang2,
             features = second_map$lang, 
             latitude = second_map$lat,
             longitude = second_map$lon,
-            color = c("#e69900", # Chechen
-                      "#b35900", # Ingush
-                      "#c68c53", # Tsova-Tush
-                      "#ff9999", # "Bezhta",
-                      "#ff1a1a", # "Hinuq",
-                      "#ff4d94", # "Hunzib",
-                      "#c65353", # "Khwarshi",
-                      "#e6004c", # "Tsez",
-                      "#b84dff", # "Akhvakh",
-                      "#0059b3", # "Andi",
-                      "#00e6e6", # "Avar",
-                      "#538cc6", # "Botlikh",
-                      "#0000e6", # "Chamalal",
-                      "#004de6", # "Godoberi"
-                      "#9494b8", # "Karata",
-                      "#5353c6"), # "Tindi"
+            color = c("#996600", # Chechen
+                      "#663300", # Ingush
+                      "#996633", # Tsova-Tush
+                      "#ff5050", # "Bezhta",
+                      "#cc0000", # "Hinuq",
+                      "#ff0066", # "Hunzib",
+                      "#993333", # "Khwarshi",
+                      "#990033", # "Tsez",
+                      "#9900ff", # "Akhvakh",
+                      "#003366", # "Andi",
+                      "#009999", # "Avar",
+                      "#336699", # "Botlikh",
+                      "#000099", # "Chamalal",
+                      "#003399", # "Godoberi"
+                      "#666699", # "Karata",
+                      "#333399"), # "Tindi"
             width = 3,
             tile = "Stamen.Terrain", 
             legend.position = "topleft",
@@ -429,10 +431,6 @@ Most of the huge systems are represented in Andic and grouped together.
 * Ingush (Nakh) -- 34
 * Bezhta (Tsezic) -- 34
 * Inkhoqwari (Tsezic) -- 33
-
-* ejectives
-* gemination (fortis)
-* labialization
 
 ## Consonants: Akhvakh vs. Inkhoqwari
 \small
@@ -771,9 +769,9 @@ b  & d  &     &     &   &   & ɡ  &    &   &   \\ \hline
 pʰ & tʰ & ts  & tʃʰ &   &   & kʰ & qʰ &   & ʔ \\ \hline
 p’ & t’ & ts’ & tʃ’ &   &   & k’ & q’ &   &   \\ \hline
    &    & z   & ʒ   &   &   &    & ʁ  & ʢ &   \\ \hline
-w  &    & s   & ʃ   &   &   & x  & χ  & ʜ & h \\ \hline
+   &    & s   & ʃ   &   &   & x  & χ  & ʜ & h \\ \hline
 m  & n  &     &     &   &   &    &    &   &   \\ \hline
-   & r  &     &     & l & j &    &    &   &   \\ \hline
+w  & r  &     &     & l & j &    &    &   &   \\ \hline
 \end{tabular}
 
 For more consonants:
@@ -795,7 +793,7 @@ data %>%
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
-  geom_vline(xintercept = 15, color = "lightblue", size = 4, linetype = 2)
+  geom_vline(xintercept = 20, color = "lightblue", size = 4, linetype = 2)
 ggsave("images/07_vowels_line.png", width = 9)
 ```
 
@@ -803,11 +801,11 @@ ggsave("images/07_vowels_line.png", width = 9)
 
 ## Vowels: typical inventory
 
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline
-i & iː &   &    & u & uː \\ \hline
-e &    &   &    & o &    \\ \hline
-  &    & a & aː &   &    \\ \hline
+i  &    & u  \\ \hline
+e  &    & o  \\ \hline
+   & a  &    \\ \hline
 \end{tabular}
 
 For more vowels:
@@ -833,22 +831,22 @@ df %>%
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
-  geom_vline(xintercept = 200, color = "lightblue", size = 4, linetype = 2)
-ggsave("images/08_cons_phoible.png")
+  geom_vline(xintercept = 250, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/08_cons_phoible.png", width = 9)
 ```
 
 ![](images/08_cons_phoible.png)
 
 ## PHOIBLE [@phoible]: consonants
 
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-b & d &   & dʒ &   &   & ɡ &   \\ \hline
-p & t &   & tʃ &   &   & k &   \\ \hline
-  &   & z & ʃ  &   &   &   &   \\ \hline
-f &   & s &    &   &   &   & h \\ \hline
-m & n &   &    &   & ɲ & ŋ &   \\ \hline
-w & r &   &    & l & j &   &   \\ \hline
+b & d &   &   &   & ɡ &   \\ \hline
+p & t &   &   &   & k &   \\ \hline
+  &   &   &   &   &   &   \\ \hline
+f &   & s &   &   &   & h \\ \hline
+m & n &   &   & ɲ & ŋ &   \\ \hline
+w & r &   & l & j &   &   \\ \hline
 \end{tabular}
 
 ## PHOIBLE [@phoible]: vowels
@@ -864,9 +862,8 @@ df %>%
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
-  geom_vline(xintercept = 200, color = "lightblue", size = 4, linetype = 2)+
   geom_vline(xintercept = 300, color = "lightblue", size = 4, linetype = 2)
-ggsave("images/09_vowel_phoible.png")
+ggsave("images/09_vowel_phoible.png", width = 9)
 ```
 
 ![](images/09_vowel_phoible.png)
@@ -890,8 +887,8 @@ tibble(cons = cons,
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
-  geom_vline(xintercept = 150, color = "lightblue", size = 4, linetype = 2)
-ggsave("images/10_eurasianphonology_cons.png")
+  geom_vline(xintercept = 200, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/10_eurasianphonology_cons.png", width = 9)
 ```
 
 ![](images/10_eurasianphonology_cons.png)
@@ -900,12 +897,12 @@ ggsave("images/10_eurasianphonology_cons.png")
 
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
-b  & d  &    & dʒ &   &   & ɡ  &   \\ \hline
-p  & t  & ts & tʃ &   &   & k  &   \\ \hline
-pʰ & tʰ &    &    &   &   & kʰ &   \\ \hline
-   &    & z  & ʒ  &   &   &    &   \\ \hline
-f  & v  & s  & ʃ  &   &   & x  & h \\ \hline
-m  & n  &    &    &   & ɲ & ŋ  &   \\ \hline
+b  & d  &    &    &   &   & ɡ  &   \\ \hline
+p  & t  &    &    &   &   & k  &   \\ \hline
+pʰ &    &    &    &   &   & kʰ &   \\ \hline
+   &    & z  &    &   &   &    &   \\ \hline
+f  &    & s  & ʃ  &   &   &    & h \\ \hline
+m  & n  &    &    &   &   & ŋ  &   \\ \hline
 w  & r  &    &    & l & j &    &   \\ \hline
 \end{tabular}
 
@@ -927,8 +924,8 @@ tibble(vows = vows,
   geom_col()+
   theme(text = element_text(size = 16))+
   labs(x = "number of languages", y = "")+
-  geom_vline(xintercept = 150, color = "lightblue", size = 4, linetype = 2)
-ggsave("images/11_eurasianphonology_vows.png")
+  geom_vline(xintercept = 200, color = "lightblue", size = 4, linetype = 2)
+ggsave("images/11_eurasianphonology_vows.png", width = 9)
 ```
 
 ![](images/11_eurasianphonology_vows.png)
@@ -1020,6 +1017,6 @@ There are two enclaves: Nakh and Lak-Dargwa.
 * if you like the presented maps, see [`lingtypology`](https://ropensci.github.io/lingtypology/) [@moroz17]
 * spectrograms were created with [`phonfieldwork`](https://ropensci.github.io/phonfieldwork/) [@moroz20]
 
-* this presentation was made with `rmarkdown` [@yihui18] and `ggplot2` [@wickham16]; source code and data for this presentation are available online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
+* this presentation was made with `rmarkdown` [@yihui18] and `ggplot2` [@wickham16]; source code and data for this presentation are available online: [tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
 
 # References {.allowframebreaks}
