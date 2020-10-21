@@ -58,6 +58,18 @@ data_m[data_m$lang == "Udi", 5] <- 47.45833
 
 data_m[data_m$lang == "Tsakhur", 4] <- 41.15083
 data_m[data_m$lang == "Tsakhur", 5] <- 47.45833
+
+colors <- read_tsv("https://raw.githubusercontent.com/sverhees/master_villages/master/data/meta.csv")
+
+colors %>% 
+  distinct(glottocode, lang_color_pale, lang) %>% 
+  bind_rows(tibble(glottocode = "sout3261",
+                   lang_color_pale = "#ffb84d"))->
+  colors
+
+data_m %>% 
+  left_join(colors[,-1]) ->
+  data_m
 ```
 
 # Introduction
@@ -231,6 +243,7 @@ map.feature(lang = data_m$lang,
             features = data_m$branch, 
             latitude = data_m$lat,
             longitude = data_m$long,
+            color = data_m$lang_color_pale,
             width = 7,
             tile = "Stamen.Terrain",
             minimap = TRUE, 
@@ -251,47 +264,94 @@ all_villages %>%
   all_villages
 
 all_villages %>% 
-  filter(str_detect(lang, "Agul|Akhvakh|Andi|Archi|Avar|Bagvalal|Bats|Bezhta|Botlikh|Budukh|Chamalal|Chechen|Dargwa|Godoberi|Hinuq")) ->
+  filter(str_detect(lang, "Dargwa|Lak|Archi|Tabasaran|Agul|Lezgian|Udi|Budukh|Kryz|Rutul|Tsakhur|Khinalug")) %>% 
+  mutate(lang2 = str_replace(lang, "Dargwa", "North Dargwa"),
+         lang = str_replace(lang, "Agul", "Aghul"),
+         lang = factor(lang, levels = c("Agul", 
+                                        "Archi",
+                                        "Budukh",
+                                        "Kryz",
+                                        "Lezgian",
+                                        "Rutul",
+                                        "Tabasaran",
+                                        "Tsakhur",
+                                        "Udi",
+                                        "Dargwa",
+                                        "Lak",
+                                        "Khinalug"))) ->
   first_map
 
 all_villages %>% 
-  filter(str_detect(lang, "Hunzib|Ingush|Khwarshi|Karata|Khinalug|Kryz|Lak|Lezgian|Rutul|Tabasaran|Tindi|Tsakhur|Tsez|Udi")) ->
+  filter(str_detect(lang, "Chechen|Ingush|Bats|Tsez|Hinuq|Bezhta|Hunzib|Khwarshi|Avar|Andi|Botlikh|Godoberi|Karata|Chamalal|Tindi|Bagvalal|Akhvakh")) %>% 
+  mutate(lang2 = str_replace(lang, "Khwarshi", "Khwarshi-Inkhoqwari"),
+         lang = str_replace(lang, "Bats", "Tsova-Tush"),
+         lang = factor(lang, levels = c("Chechen",
+                                        "Ingush",
+                                        "Tsova-Tush",
+                                        "Bezhta",
+                                        "Hinuq",
+                                        "Hunzib",
+                                        "Khwarshi",
+                                        "Tsez",
+                                        "Akhvakh",
+                                        "Andi",
+                                        "Avar",
+                                        "Botlikh",
+                                        "Chamalal",
+                                        "Godoberi",
+                                        "Karata",
+                                        "Tindi")))->
   second_map
 
-set.seed(45)
-my_colors <-
-    c(
-      "#1f77b4",
-      "#ff7f0e",
-      "#2ca02c",
-      "#d62728",
-      "#9467bd",
-      "#8c564b",
-      "#e377c2",
-      "#7f7f7f",
-      "#17becf",
-      sample(grDevices::colors()[!grepl("ivory|azure|white|gray|grey|black|pink|1",
-                                        grDevices::colors())])
-    )
 
-map.feature(lang = first_map$lang,
+
+map.feature(lang = first_map$lang2,
             features = first_map$lang, 
             latitude = first_map$lat,
             longitude = first_map$lon,
-            color = my_colors[1:15],
+            color = c("#1aff8c", # "Agul", 
+                      "#c6ff1a", # "Archi",
+                      "#00b300", # "Budukh",
+                      "#00e64d", # "Kryz",
+                      "#1aff1a", # "Lezgian",
+                      "#00e600", # "Rutul",
+                      "#53c68c", # "Tabasaran",
+                      "#99e600", # "Tsakhur",
+                      "#008000", # "Udi",
+                      "#ffb84d", # "Dargwa",
+                      "#ffc61a", # "Lak",
+                      "#ffff1a"  # "Khinalug"
+            ),
             width = 3,
             tile = "Stamen.Terrain") %>% 
-  map.feature(lang = second_map$lang,
+  map.feature(lang = second_map$lang2,
             features = second_map$lang, 
             latitude = second_map$lat,
             longitude = second_map$lon,
-            color = my_colors[16:29],
+            color = c("#e69900", # Chechen
+                      "#b35900", # Ingush
+                      "#c68c53", # Tsova-Tush
+                      "#ff9999", # "Bezhta",
+                      "#ff1a1a", # "Hinuq",
+                      "#ff4d94", # "Hunzib",
+                      "#c65353", # "Khwarshi",
+                      "#e6004c", # "Tsez",
+                      "#b84dff", # "Akhvakh",
+                      "#0059b3", # "Andi",
+                      "#00e6e6", # "Avar",
+                      "#538cc6", # "Botlikh",
+                      "#0000e6", # "Chamalal",
+                      "#004de6", # "Godoberi"
+                      "#9494b8", # "Karata",
+                      "#5353c6"), # "Tindi"
             width = 3,
             tile = "Stamen.Terrain", 
-            pipe.data = ., legend.position = "topleft",
+            legend.position = "topleft",
             minimap = TRUE, 
             minimap.position = "bottomleft",
-            minimap.width = 300)
+            minimap.width = 300, 
+            minimap.height = 120,
+            pipe.data = .)
 ```
 
 # Methods
@@ -435,7 +495,7 @@ data %>%
   filter(sound_type == "consonant") %>% 
   left_join(data_m) %>%
   mutate(feature = str_detect(segments_IPA, "ː")) %>%
-  group_by(language, branch, lang, lat, long) %>% 
+  group_by(language, branch, lang, lat, long, lang_color_pale) %>% 
   summarise(feature = sum(feature)) %>% 
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
@@ -443,6 +503,7 @@ data %>%
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
+            color = for_map$lang_color_pale,
             latitude = for_map$lat,
             longitude = for_map$long,
             width = 6,
@@ -456,7 +517,7 @@ data %>%
   filter(sound_type == "consonant") %>% 
   left_join(data_m) %>%
   mutate(feature = str_detect(segments_IPA, "ʷ")) %>%
-  group_by(language, branch, lang, lat, long) %>% 
+  group_by(language, branch, lang, lat, long, lang_color_pale) %>% 
   summarise(feature = sum(feature)) %>% 
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
@@ -464,6 +525,7 @@ data %>%
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
+            color = for_map$lang_color_pale,
             latitude = for_map$lat,
             longitude = for_map$long,
             width = 6,
@@ -477,7 +539,7 @@ data %>%
   filter(sound_type == "consonant") %>% 
   left_join(data_m) %>%
   mutate(feature = str_detect(segments_IPA, "ɬ")) %>%
-  group_by(language, branch, lang, lat, long) %>% 
+  group_by(language, branch, lang, lat, long, lang_color_pale) %>% 
   summarise(feature = sum(feature)) %>% 
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
@@ -485,6 +547,7 @@ data %>%
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
+            color = for_map$lang_color_pale,
             latitude = for_map$lat,
             longitude = for_map$long,
             width = 6,
@@ -568,7 +631,7 @@ Most of the huge systems are presented in Tsezic and Andic.
 data %>% 
   left_join(data_m) %>% 
   mutate(feature = str_detect(segments_IPA, "ⁿ")) %>%
-  group_by(language, branch, lang, lat, long) %>% 
+  group_by(language, branch, lang, lat, long, lang_color_pale) %>% 
   summarise(feature = sum(feature)) %>% 
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
@@ -576,6 +639,7 @@ data %>%
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
+            color = for_map$lang_color_pale,
             latitude = for_map$lat,
             longitude = for_map$long,
             width = 6,
@@ -591,7 +655,7 @@ data %>%
   left_join(data_m) %>% 
   filter(sound_type == "vowel") %>% 
   mutate(feature = str_detect(segments_IPA, "ː")) %>%
-  group_by(language, branch, lang, lat, long) %>% 
+  group_by(language, branch, lang, lat, long, lang_color_pale) %>% 
   summarise(feature = sum(feature)) %>% 
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
@@ -599,6 +663,7 @@ data %>%
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
+            color = for_map$lang_color_pale,
             latitude = for_map$lat,
             longitude = for_map$long,
             width = 6,
@@ -612,7 +677,7 @@ Long vowels are common to all branches.
 data %>% 
   left_join(data_m) %>%
   mutate(feature = str_detect(sound_type, "diphthong")) %>%
-  group_by(language, branch, lang, lat, long) %>% 
+  group_by(language, branch, lang, lat, long, lang_color_pale) %>% 
   summarise(feature = sum(feature)) %>% 
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
@@ -620,6 +685,7 @@ data %>%
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
+            color = for_map$lang_color_pale,
             latitude = for_map$lat,
             longitude = for_map$long,
             width = 6,
@@ -922,7 +988,7 @@ draw_sound(file_name = "data/epig.wav",
 data %>% 
   left_join(data_m) %>% 
   mutate(feature = str_detect(segments_IPA, "ˤ")) %>%
-  group_by(language, branch, lang, lat, long) %>% 
+  group_by(language, branch, lang, lat, long, lang_color_pale) %>% 
   summarise(feature = sum(feature)) %>% 
   mutate(feature = ifelse(feature > 0, "present", "absent")) ->
   for_map
@@ -934,6 +1000,7 @@ for_map[for_map$lang == "Bats", "feature"] <- "present"
 map.feature(languages = for_map$lang,
             features = for_map$branch,
             stroke.features = for_map$feature,
+            color = for_map$lang_color_pale,
             latitude = for_map$lat,
             longitude = for_map$long,
             width = 6,
