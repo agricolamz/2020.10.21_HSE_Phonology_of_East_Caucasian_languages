@@ -307,7 +307,8 @@ map.feature(lang = first_map$lang,
     * you need to be a specialist \pause
 * May be conclusions presented by Johanna Nichols could be data driven? \pause
     * some of them can be visualised with a map
-    * some of them can be gahtered via frequency and combinatorics analysis
+    * some of them can be gahtered via frequency and combinatorics analysis \pause
+    * it is not something new, more or less the same thing have been done for Australian languages [@gasser14]
 
 # Inventory size
 
