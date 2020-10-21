@@ -4,10 +4,10 @@ author: "George Moroz"
 institute: "[Linguistic Convergence Laboratory](https://ilcl.hse.ru/en/), NRU HSE"
 date: |
     | 21 October 2020
-    | part of the online [course on East Caucasian languages](https://ilcl.hse.ru/en/east_caucasian/)
     |
-    | last version of the presentation is available here: [tinyurl.com/y2foeo9g](tinyurl.com/y2foeo9g)
     | ![](images/00_qrcode.png)'
+    | part of the online [course on East Caucasian languages](https://ilcl.hse.ru/en/east_caucasian/)
+    | last version of the presentation is available here: [tinyurl.com/y2foeo9g](tinyurl.com/y2foeo9g)
 output: 
   beamer_presentation:
     df_print: kable
@@ -951,7 +951,7 @@ There are two enclaves: Nakh and Lak-Dargwa.
 * to Linguistic Convergence Laboratory for organising this course\pause
 * and \alert{YOU} for your attention\bigskip\pause
 * if you like the presented maps, see [`lingtypology`](https://ropensci.github.io/lingtypology/) [@moroz17]
-* spectrograms were created with [`phonfieldwork`](https://agricolamz.github.io/phonfieldwork/) [@moroz20]
+* spectrograms were created with [`phonfieldwork`](https://ropensci.github.io/phonfieldwork/) [@moroz20]
 
 * this presentation was made with `rmarkdown` [@yihui18] and `ggplot2` [@wickham16]; source code and data for this presentation are available online: [https://tinyurl.com/y2oh9sg8](https://tinyurl.com/y2oh9sg8)
 
