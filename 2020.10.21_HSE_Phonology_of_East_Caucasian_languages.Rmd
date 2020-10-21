@@ -77,6 +77,15 @@ Languages: [@koryakov21]
 * historical-comparative phonetics
     * S. M. Gasanova, G. Kh. Ibragimov, P. T. Magomedova, U. A. Meylanova, B. B. Talibov, S. M. Khaydakov, A. E. Alekseev, Ju. D. Desheriev, B. K. Gigineishvili, D. S. Imnaishvili, J. Nichols, S. L. Nikolayev, S. A. Starostin, A. S. Kasyan, N. A. Ardoteli, O. A. Mudrak
 
+## The main goal of this lecture
+    
+During the talk we will:
+
+* discuss consonant and vowel inventories size of East Caucasian languages 
+* explore sounds that are typicall for East Caucasian languages
+* try to figure out what is the typical inventory consists of
+* compare with other typological databases (PHOIBLE [@phoible], Eurasian phonological inventories [@eurasianphonology])
+
 # Data
 
 ## Languages
@@ -191,10 +200,29 @@ Languages: [@koryakov21]
 
 `r nrow(data)` $\times$ `r ncol(data)` [table](https://raw.githubusercontent.com/agricolamz/2020.10.21_HSE_Phonology_of_East_Caucasian_languages/master/data/data.csv) with the following columns:
 
-```{r, results="asis"}
-cat(paste0("* ", colnames(data), "\n"))
-```
+* `id`
+* `branch`
+* `language`
+* `segment IPA`
+* `segment sorce`
+* `source`
+* `sound type`
+* `comments`
+* `glottocode`
 
+## Data
+
+`r nrow(data)` $\times$ `r ncol(data)` [table](https://raw.githubusercontent.com/agricolamz/2020.10.21_HSE_Phonology_of_East_Caucasian_languages/master/data/data.csv) with the following columns:
+
+* `id` -- 1407
+* `branch` -- Lezgic (possible values are  `r paste0(unique(data$branch), collapse = ", ")`)
+* `language` -- Tsakhur
+* `segment IPA` -- tʃː
+* `segment sorce` -- \v{\=c}
+* `source` -- [Kibrik, Kodzasov 1990: 343-344]
+* `sound type` -- consonant (possible values are `r paste0(unique(data$sound_type), collapse = ", ")`)
+* `comments` --  rare sound
+* `glottocode` -- [tsak1249](https://glottolog.org/resource/languoid/id/tsak1249)
 
 ## Data (language view)
 
@@ -270,46 +298,14 @@ map.feature(lang = first_map$lang,
 
 ## Phonology of East Caucasian languages can be preseneted like this...
 
-```{r}
-knitr::include_graphics("images/01_systems.png")
-```
-
-## Phonology of East Caucasian languages can be preseneted like this...
-
-```{r}
-knitr::include_graphics("images/02_systems.png")
-```
-
-## Phonology of East Caucasian languages can be preseneted like this...
-
-```{r}
-knitr::include_graphics("images/03_systems.png")
-```
-
-## This way is...
-
-* boring, \pause
-* mechanical, \pause 
-* it is hard to make generalisations (at least, on the fly)
-
-## Phonology of East Caucasian languages can be preseneted like this...
-      
-![](images/04_johanna.png)
-
-\pause
-
-(If you have not seen it, go and wath [our previous lecture](https://youtu.be/gfvauHnP1c4)!)
-
-## These ways are...
-
-* To list all inventories
+* To list all inventories one by one
     * boring, 
     * mechanical, 
     * hard to make generalisations (at least, on the fly)
-* To present generalisations
+* To present generalisations (like Johanna Nichols during the [previous talk](https://youtu.be/gfvauHnP1c4))
     * restricted to peculiarities, \pause
     * you need to be a specialist \pause
-* May be these conclusions could be data driven? \pause
+* May be conclusions presented by Johanna Nichols could be data driven? \pause
     * some of them can be visualised with a map
     * some of them can be gahtered via frequency and combinatorics analysis
 
@@ -878,7 +874,9 @@ ggsave("images/11_eurasianphonology_vows.png")
     * except laterals in Avar-Andic and Tsezic branches
     * except labialisation
     * except gemination \pause
-* East Caucasian vowel systems are typical
+* East Caucasian vowel systems are typical \pause
+* All these conclusions were data driven \pause
+* But you need to have a good data...
 
 # Suprasegmental features
 
